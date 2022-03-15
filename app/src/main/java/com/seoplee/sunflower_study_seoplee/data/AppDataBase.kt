@@ -12,10 +12,11 @@ import androidx.room.TypeConverters
 @TypeConverters(Converters::class)
 abstract class AppDataBase: RoomDatabase() {
 
+    abstract fun gardenPlantingDao(): GardenPlantingDao
+    abstract fun plantDao(): PlantDao
+
     companion object {
         const val DB_NAME = "AppDataBase.db"
     }
 
-    abstract fun gardenPlantingDao(): GardenPlantingDao
-    abstract fun plantDao(): PlantDao
 }

@@ -1,12 +1,21 @@
 package com.seoplee.sunflower_study_seoplee.di
 
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.seoplee.sunflower_study_seoplee.MyApplication
+import com.seoplee.sunflower_study_seoplee.MyApplication.Companion.appContext
 import com.seoplee.sunflower_study_seoplee.api.UnsplashService
 import com.seoplee.sunflower_study_seoplee.api.Url
 import com.seoplee.sunflower_study_seoplee.data.AppDataBase
 import com.seoplee.sunflower_study_seoplee.data.GardenPlantingDao
 import com.seoplee.sunflower_study_seoplee.data.PlantDao
+import com.seoplee.sunflower_study_seoplee.utils.PLANT_DATA_FILENAME
+import com.seoplee.sunflower_study_seoplee.workers.SeedDatabaseWorker
+import com.seoplee.sunflower_study_seoplee.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +49,18 @@ object AppModule{
     @Provides
     @Singleton
     fun provideLocalDB() : AppDataBase = Room
-        .databaseBuilder(MyApplication.appContext!!, AppDataBase::class.java, AppDataBase.DB_NAME)
+        .databaseBuilder(appContext!!, AppDataBase::class.java, AppDataBase.DB_NAME)
+        .addCallback(
+            object : RoomDatabase.Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
+                        .setInputData(workDataOf(KEY_FILENAME to PLANT_DATA_FILENAME))
+                        .build()
+                    WorkManager.getInstance(appContext!!).enqueue(request)
+                }
+            }
+        )
         .allowMainThreadQueries()
         .build()
 
