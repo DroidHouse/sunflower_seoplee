@@ -18,7 +18,7 @@ class MainViewPagerFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         val binding = FragmentMainViewpagerBinding.inflate(inflater, container, false)
         val tabLayout = binding.tabLayout
         val viewPager = binding.viewPager

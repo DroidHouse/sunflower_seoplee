@@ -7,5 +7,19 @@
     <fragment
         android:id="@+id/mainViewPagerFragment"
         android:name="com.seoplee.sunflower_study_seoplee.ui.MainViewPagerFragment"
-        android:label="MainViewPagerFragment" />
+        android:label="MainViewPagerFragment" >
+        <action
+            android:id="@+id/action_mainViewPagerFragment_to_plantDetailFragment"
+            app:destination="@id/plantDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantDetailFragment"
+        android:name="com.seoplee.sunflower_study_seoplee.ui.PlantDetailFragment"
+        android:label="PlantDetailFragment">
+
+        <argument
+            android:name="plantName"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
