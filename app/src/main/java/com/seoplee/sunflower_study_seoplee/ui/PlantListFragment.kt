@@ -52,9 +52,10 @@ class PlantListFragment : Fragment() {
 
         viewModel.getPlantList().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe{
-                adapter.submitList(it)
-            }
+            .subscribe(
+                { adapter.submitList(it) },
+                { Log.e(TAG, "load plantList Error ${it.message}") }
+            )
     }
 
     private fun navigateToDetail(plant: Plant) {

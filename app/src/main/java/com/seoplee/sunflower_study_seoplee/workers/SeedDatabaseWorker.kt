@@ -16,6 +16,7 @@
 
 package com.seoplee.sunflower_study_seoplee.workers
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
@@ -28,6 +29,8 @@ import com.seoplee.sunflower_study_seoplee.data.AppDataBase
 import com.seoplee.sunflower_study_seoplee.data.Plant
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -37,6 +40,7 @@ class SeedDatabaseWorker @AssistedInject constructor (
     @Assisted workerParams: WorkerParameters,
     private val db : AppDataBase
 ) : CoroutineWorker(context, workerParams) {
+    @SuppressLint("CheckResult")
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val filename = inputData.getString(KEY_FILENAME)
@@ -47,7 +51,12 @@ class SeedDatabaseWorker @AssistedInject constructor (
                         val plantList: List<Plant> = Gson().fromJson(jsonReader, plantType)
 
                         db.plantDao().insertAll(plantList)
-                        Log.e(TAG,"doWorkSuccess")
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                { Log.d(TAG,"doWorkSuccess") },
+                                { Log.e(TAG, "Error seeding database - insert Error : ${it.message}") }
+                            )
                         Result.success()
                     }
                 }
