@@ -35,8 +35,6 @@ class PlantDetailFragment : Fragment() {
         binding.textView.text = args.plantId
         viewModel.plantId = args.plantId
 
-
-
     }
 
     companion object {

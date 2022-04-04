@@ -52,16 +52,20 @@ class GardenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchData().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
-            { adapter.submitList(it) },
-            { Log.e(TAG, "load gardenPlanting Error : ${it.message}") }
-        )
+        viewModel.fetchData()
+        observeData()
 
     }
 
     private fun navigateToDetail(plant: Plant) {
         val direction = MainViewPagerFragmentDirections.actionMainViewPagerFragmentToPlantDetailFragment(plant.plantId)
         view?.findNavController()?.navigate(direction)
+    }
+
+    private fun observeData() {
+        viewModel.gardenPlantings.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     companion object {

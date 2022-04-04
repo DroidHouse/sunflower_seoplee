@@ -49,17 +49,19 @@ class PlantListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getPlantList().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { adapter.submitList(it) },
-                { Log.e(TAG, "load plantList Error ${it.message}") }
-            )
+        viewModel.fetchData()
+        observeData()
     }
 
     private fun navigateToDetail(plant: Plant) {
         val direction = MainViewPagerFragmentDirections.actionMainViewPagerFragmentToPlantDetailFragment(plant.plantId)
         view?.findNavController()?.navigate(direction)
+    }
+
+    private fun observeData() {
+        viewModel.plantList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     companion object {
