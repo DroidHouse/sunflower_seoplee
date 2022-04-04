@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.seoplee.sunflower_study_seoplee.BaseFragment
 import com.seoplee.sunflower_study_seoplee.databinding.FragmentPlantDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlantDetailFragment : Fragment() {
+class PlantDetailFragment : BaseFragment<PlantDetailViewModel>() {
 
     private lateinit var binding: FragmentPlantDetailBinding
 
-    private val viewModel: PlantDetailViewModel by viewModels()
+    override val viewModel: PlantDetailViewModel by viewModels()
 
     private val args: PlantDetailFragmentArgs by navArgs()
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.seoplee.sunflower_study_seoplee.BaseFragment
 import com.seoplee.sunflower_study_seoplee.adapters.GardenPlantingAdapter
 import com.seoplee.sunflower_study_seoplee.adapters.GardenPlantingAdapterListener
 import com.seoplee.sunflower_study_seoplee.adapters.PlantAdapter
@@ -21,11 +22,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @AndroidEntryPoint
-class GardenFragment : Fragment() {
+class GardenFragment : BaseFragment<GardenViewModel>() {
 
     private lateinit var binding: FragmentGardenBinding
 
-    private val viewModel: GardenViewModel by viewModels()
+    override val viewModel: GardenViewModel by viewModels()
 
     private val adapter by lazy {
         GardenPlantingAdapter(
@@ -47,8 +48,6 @@ class GardenFragment : Fragment() {
         return binding.root
     }
 
-
-    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

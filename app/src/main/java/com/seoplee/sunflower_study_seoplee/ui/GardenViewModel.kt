@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.seoplee.sunflower_study_seoplee.BaseViewModel
 import com.seoplee.sunflower_study_seoplee.data.GardenPlantingRepository
 import com.seoplee.sunflower_study_seoplee.data.Plant
 import com.seoplee.sunflower_study_seoplee.data.PlantAndGardenPlantings
@@ -20,18 +21,19 @@ import javax.inject.Inject
 @HiltViewModel
 class GardenViewModel @Inject constructor(
     private val gardenPlantingRepository: GardenPlantingRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _gardenPlantings = MutableLiveData<List<PlantAndGardenPlantings>>()
     val gardenPlantings : LiveData<List<PlantAndGardenPlantings>>
         get() = _gardenPlantings
 
-    @SuppressLint("CheckResult")
     fun fetchData() {
-        gardenPlantingRepository.getPlantedGardens()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { it -> _gardenPlantings.postValue(it) }
+        compositeDisposable.add(
+            gardenPlantingRepository.getPlantedGardens()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { it -> _gardenPlantings.postValue(it) }
+        )
     }
 }
 

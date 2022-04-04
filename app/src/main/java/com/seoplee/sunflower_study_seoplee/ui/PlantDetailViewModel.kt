@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.seoplee.sunflower_study_seoplee.BaseViewModel
 import com.seoplee.sunflower_study_seoplee.data.GardenPlantingRepository
 import com.seoplee.sunflower_study_seoplee.data.Plant
 import com.seoplee.sunflower_study_seoplee.data.PlantRepository
@@ -17,19 +18,20 @@ import javax.inject.Inject
 @HiltViewModel
 class PlantDetailViewModel @Inject constructor(
     private val gardenPlantingRepository: GardenPlantingRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     lateinit var plantId: String
 
-    @SuppressLint("CheckResult")
     fun addPlantToGarden(plantId: String) {
-        gardenPlantingRepository.createGardenPlanting(plantId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { Log.d(TAG,"addPlantToGarden Success") },
-                { Log.e(TAG,"addPlantToGarden Fail : ${it.message}")}
-            )
+        compositeDisposable.add(
+            gardenPlantingRepository.createGardenPlanting(plantId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { Log.d(TAG,"addPlantToGarden Success") },
+                    { Log.e(TAG,"addPlantToGarden Fail : ${it.message}")}
+                )
+        )
     }
 
     companion object {
