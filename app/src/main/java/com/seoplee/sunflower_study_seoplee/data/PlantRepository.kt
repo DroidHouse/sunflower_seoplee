@@ -5,5 +5,7 @@ import io.reactivex.Single
 
 interface PlantRepository {
 
-    fun getPlants() : Single<List<Plant>>
+    fun getPlants() : Flowable<List<Plant>>
+
+    fun getPlant(plantId: String) : Single<Plant>
 }

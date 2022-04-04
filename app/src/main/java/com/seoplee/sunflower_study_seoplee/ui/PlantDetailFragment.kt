@@ -24,6 +24,7 @@ class PlantDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentPlantDetailBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
         return binding.root
     }
 
@@ -31,7 +32,10 @@ class PlantDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textView.text = args.plantName
+        binding.textView.text = args.plantId
+        viewModel.plantId = args.plantId
+
+
 
     }
 

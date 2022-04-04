@@ -18,7 +18,7 @@
         android:label="PlantDetailFragment">
 
         <argument
-            android:name="plantName"
+            android:name="plant_id"
             app:argType="string" />
     </fragment>
 

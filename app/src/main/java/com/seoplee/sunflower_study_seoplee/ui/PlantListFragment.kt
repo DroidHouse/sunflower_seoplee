@@ -39,7 +39,6 @@ class PlantListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentPlantListBinding.inflate(inflater, container, false)
-
         binding.recyclerView.adapter = adapter
 
         return binding.root
@@ -59,7 +58,7 @@ class PlantListFragment : Fragment() {
     }
 
     private fun navigateToDetail(plant: Plant) {
-        val direction = MainViewPagerFragmentDirections.actionMainViewPagerFragmentToPlantDetailFragment(plant.name)
+        val direction = MainViewPagerFragmentDirections.actionMainViewPagerFragmentToPlantDetailFragment(plant.plantId)
         view?.findNavController()?.navigate(direction)
     }
 

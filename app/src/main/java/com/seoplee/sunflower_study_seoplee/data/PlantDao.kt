@@ -16,5 +16,8 @@ interface PlantDao {
     fun insertAll(plants: List<Plant>) : Completable
 
     @Query("SELECT * FROM Plant")
-    fun getPlants(): Single<List<Plant>>
+    fun getPlants(): Flowable<List<Plant>>
+
+    @Query("SELECT * FROM Plant WHERE plant_id = :plantId")
+    fun getPlant(plantId: String): Single<Plant>
 }

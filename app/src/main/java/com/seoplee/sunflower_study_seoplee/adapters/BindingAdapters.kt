@@ -1,10 +1,13 @@
 package com.seoplee.sunflower_study_seoplee.adapters
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import java.text.SimpleDateFormat
+import java.util.*
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
@@ -16,4 +19,10 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
             .thumbnail(0.1f)
             .into(view)
     }
+}
+
+@BindingAdapter("calendarToString")
+fun bindCalendarToString(view: TextView, date: Calendar) {
+    val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.US)
+    view.text = dateFormat.format(date.time)
 }

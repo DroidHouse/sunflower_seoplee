@@ -8,7 +8,11 @@ import javax.inject.Inject
 class PlantRepositoryImpl @Inject constructor(
     private val db : AppDataBase
 ) : PlantRepository {
-    override fun getPlants(): Single<List<Plant>> {
+    override fun getPlants(): Flowable<List<Plant>> {
         return db.plantDao().getPlants()
+    }
+
+    override fun getPlant(plantId: String): Single<Plant> {
+        return db.plantDao().getPlant(plantId)
     }
 }

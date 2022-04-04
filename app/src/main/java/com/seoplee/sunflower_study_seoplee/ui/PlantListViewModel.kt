@@ -13,7 +13,7 @@ class PlantListViewModel @Inject constructor(
     private val plantRepository: PlantRepository
 ) : ViewModel() {
 
-    fun getPlantList(): Single<List<Plant>> {
+    fun getPlantList(): Flowable<List<Plant>> {
         return plantRepository.getPlants()
     }
 }
