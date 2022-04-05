@@ -27,7 +27,11 @@ class GardenViewModel @Inject constructor(
     val gardenPlantings : LiveData<List<PlantAndGardenPlantings>>
         get() = _gardenPlantings
 
-    fun fetchData() {
+    init {
+        fetchData()
+    }
+
+    private fun fetchData() {
         compositeDisposable.add(
             gardenPlantingRepository.getPlantedGardens()
                 .subscribeOn(Schedulers.io())

@@ -49,7 +49,6 @@ class PlantListFragment : BaseFragment<PlantListViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchData()
         observeData()
     }
 
