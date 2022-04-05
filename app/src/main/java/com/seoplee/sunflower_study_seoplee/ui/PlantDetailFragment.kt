@@ -11,6 +11,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -44,6 +45,8 @@ class PlantDetailFragment : BaseFragment<PlantDetailViewModel>() {
                         .show()
                 }
             }
+
+            galleryNav.setOnClickListener { navigateToGallery() }
 
             toolbar.setNavigationOnClickListener { view ->
                 view.findNavController().navigateUp()
@@ -93,6 +96,14 @@ class PlantDetailFragment : BaseFragment<PlantDetailViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    private fun navigateToGallery() {
+        viewModel.plant.value?.let { plant ->
+            val direction =
+                PlantDetailFragmentDirections.actionPlantDetailFragmentToGalleryFragment(plant.name)
+            findNavController().navigate(direction)
+        }
     }
 
     // Helper function for calling a share functionality.

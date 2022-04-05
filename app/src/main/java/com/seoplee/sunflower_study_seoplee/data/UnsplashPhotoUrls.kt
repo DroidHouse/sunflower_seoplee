@@ -1,4 +1,5 @@
 package com.seoplee.sunflower_study_seoplee.data
 
-class UnsplashPhotoUrls {
-}
+data class UnsplashPhotoUrls(
+    val small: String
+)

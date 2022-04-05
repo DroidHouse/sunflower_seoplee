@@ -20,6 +20,18 @@
         <argument
             android:name="plantId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_plantDetailFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.seoplee.sunflower_study_seoplee.ui.GalleryFragment"
+        android:label="GalleryFragment" >
+
+        <argument
+            android:name="plantName"
+            app:argType="string" />
     </fragment>
 
 </navigation>

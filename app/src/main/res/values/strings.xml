@@ -16,5 +16,6 @@
     </plurals>
 
     <string name="share_text_plant">Check out the %s plant in the Android Sunflower app</string>
+    <string name="unsplash_title">Photos by Unsplash</string>
 
 </resources>
